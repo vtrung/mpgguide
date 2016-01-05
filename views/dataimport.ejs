@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Data Import</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="http://goessner.net/download/prj/jsonxml/xml2json.js"></script>
+    <script>
+      var test;
+      function sendUp(car){
+        //xmlDoc = $.parseXML( car),
+        $xml = $( car ),
+        $title = $xml.find( "make" ).text();
+        var car1 = {
+          id: $xml.find( "id" ).text(),
+          year: $xml.find( "year" ).text(),
+          make: $xml.find( "make" ).text(),
+          model: $xml.find( "model" ).text(),
+          trans: $xml.find( "trany").text(),
+          hwy: $xml.find( "highway08" ).text(),
+          city: $xml.find( "city08" ).text()
+        };
+        console.log(car1);
+        var json = JSON.stringify(car1);
+        // console.log(json);
+        // console.log(JSON.parse(json));
+        // test = JSON.parse(json);
+        $.post('/data/import1',{ car: json }, function(data){
+          //console.log(data);
+        });
+      }
+      function start(s){
+        var url = "http://www.fueleconomy.gov/ws/rest/vehicle/";
+        for(var i = s; i< s + 1000; i++){
+          $.get(url+i, function(data){
+            console.log(data.documentElement);
+            test = data.documentElement;
+            sendUp(test);
+          });
+        }
+      }
+      function getCar(s, f){
+        var url = "http://www.fueleconomy.gov/ws/rest/vehicle/";
+        if(s <= f){
+          $.get(url+s, function(data){
+            //console.log(data.documentElement);
+            console.log(s);
+            res = data.documentElement;
+            sendUp(res);
+            setTimeout(getCar(s+1, f), 5000);
+          });
+        }
+
+      }
+      function starttest(s, f){
+        //var url = "http://www.fueleconomy.gov/ws/rest/vehicle/";
+        for(var i = s; i< f; i++){
+          setTimeout(getCar(s), 1000);
+        };
+      }
+
+
+
+    </script>
+  </head>
+  <body>
+    <h1>Importing</h1>
+    <button id='startimport'></button>
+  </body>
+</html>

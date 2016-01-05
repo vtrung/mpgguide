@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MPG</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style>
+      body{
+        margin: 0 auto;
+        padding: 10px;
+      }
+      .container{
+        width: 926px;
+        overflow: auto;
+        margin: 0 auto;
+      }
+      .titlebar{
+        background-color: green;
+        border: 1px dotted gray;
+        margin: auto;
+        height: 100px;
+        overflow: auto;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .titlebar h1{
+        color: white;
+        font-size: 40px;
+      }
+      .main{
+        overflow: auto;
+      }
+      .car-box{
+        float: left;
+        width: 300px;
+        border: 1px solid grey;
+      }
+      select {
+        min-width: 270px;
+        padding: 10px;
+        height: 50px;
+      }
+      .car-content{
+        padding: 10px;
+      }
+      .car-heading{
+        text-align: center;
+        width: 100%;
+        padding: 10px 0;
+        background-color: green;
+        color: white;
+        font-size: 25px;
+        text-align: center;
+        font-weight: 600;
+      }
+
+      .car-result{
+        float:left;
+        margin: 0 10px;
+        width: 300px;
+        border: 1px dotted black;
+      }
+      .result-title{
+        background-color: teal;
+        color: white;
+        font-size: 25px;
+        font-weight: 600;
+        text-align: center;
+        padding: 10px 0;
+      }
+      .result-content{
+        padding: 10px;
+      }
+      .mpg-font{
+        font-weight:900;
+        font-size:20px;
+        color: green;
+      }
+    </style>
+    <script src="/javascripts/angular.min.js"></script>
+    <script src="/javascripts/mpg.js"></script>
+  </head>
+  <body ng-app='mpgApp'>
+    <div class='container'>
+      <div class='titlebar'>
+          <h1>MPG guide</h1>
+      </div>
+      <div class='main'>
+        <div ng-controller="CarListController">
+          <div class='car-container' style='overflow:auto'>
+            <div class='car-box'>
+              <div class='car-heading'>Car 1</div>
+              <div class='car-content'>
+                <!-- <p> {{selectedYear}} {{selectedMake}}</p> -->
+                <select ng-model="selectedYear">
+                  <option ng-repeat="year in years" value="{{year}}">
+                    {{year}}
+                  </option>
+                </select>
+                <br />
+                <select ng-model="selectedMake" ng-show="selectedYear != ''">
+                  <option ng-repeat="make in makes" value="{{make}}">
+                    {{make}}
+                  </option>
+                </select>
+                <br />
+                <select ng-model="selectedModel" ng-show="selectedMake != ''">
+                  <option ng-repeat="m in models" value="{{m}}">
+                    {{m}}
+                  </option>
+                </select>
+                <br />
+                <select ng-model="selectedTran" ng-show="selectedModel != ''">
+                  <option ng-repeat="tran in trans" value="{{tran.id}}">
+                    {{tran.trans}}
+                  </option>
+                </select>
+                <div ng-show="selectedCar != ''">
+                  <h3>{{selectedCar.year}} {{selectedCar.make}} {{selectedCar.model}}</h3>
+                  <p><b>Miles Per Gallon</b></p>
+                  <p>City: <span class='mpg-font'>{{selectedCar.city}}</span></p>
+                  <p>Highway: <span class='mpg-font'>{{selectedCar.hwy}}</span></p>
+                  <p>Combined: <span class='mpg-font'>{{combined1 | number: 2}}</span> </p>
+                </div>
+              </div>
+
+            </div>
+            <div class='car-result'>
+              <div class='result-title'> Results </div>
+              <div class='result-content'>
+                <p>Fuel Price: {{fuelprice | currency}}</p>
+                <span>Enter Custom Price: </span><input ng-model='fuelprice'>
+                <p>Total Miles: {{miles | number: 0}}</p>
+                <span>Enter Custom Miles: </span><input ng-model='miles'>
+                <p class='savings'>Total Savings: {{savings | currency}} </p>
+              </div>
+            </div>
+            <div class="car-box">
+              <div class='car-heading'>Car 2</div>
+              <div class='car-content'>
+                <!-- <p>{{selectedYear2}} {{selectedMake2}}</p> -->
+                <select ng-model="selectedYear2">
+                  <option ng-repeat="year in years" value="{{year}}">
+                    {{year}}
+                  </option>
+                </select>
+                <br />
+                <select ng-model="selectedMake2" ng-show="selectedYear2 != ''">
+                  <option ng-repeat="make in makes2" value="{{make}}">
+                    {{make}}
+                  </option>
+                </select>
+                <br />
+                <select ng-model="selectedModel2" ng-show="selectedMake2 != ''">
+                  <option ng-repeat="m in models2" value="{{m}}">
+                    {{m}}
+                  </option>
+                </select>
+                <br />
+                <select ng-model="selectedTran2" ng-show="selectedModel2 != ''">
+                  <option ng-repeat="tran in trans2" value="{{tran.id}}">
+                    {{tran.trans}}
+                  </option>
+                </select>
+                <div ng-show="selectedCar2 != ''">
+                  <h3>{{selectedCar2.year}} {{selectedCar2.make}} {{selectedCar2.model}}</h3>
+                  <p><b>Miles Per Gallon</b></p>
+                  <p>City: <span class='mpg-font'>{{selectedCar2.city}}</span></p>
+                  <p>Highway: <span class='mpg-font'>{{selectedCar2.hwy}}</span></p>
+                  <p>Combined: <span class='mpg-font'>{{combined2 | number: 2}}</span> </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
