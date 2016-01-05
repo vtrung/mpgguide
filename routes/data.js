@@ -1,12 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var parseString = require('xml2js').parseString;
-var xml = "<root>Hello xml2js!</root>"
-parseString(xml, function (err, result) {
-    console.dir(result);
-});
- var db = require('../helpers/db');
- var Car = require('../models/car');
+var db = require('../helpers/db');
+var Car = require('../models/car');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
