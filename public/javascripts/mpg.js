@@ -51,6 +51,7 @@ mpgApp.controller('CarListController', function($scope, $http){
           console.log(response);
           $scope.cars = response.data;
           var umodel = [];
+          $scope.models = [];
           $scope.cars.forEach(function(element){
             if(umodel[element.model] != true){
               $scope.models.push(element.model);
@@ -106,6 +107,7 @@ mpgApp.controller('CarListController', function($scope, $http){
           console.log(response);
           $scope.cars2 = response.data;
           var umodel = [];
+          $scope.models2 = [];
           $scope.cars2.forEach(function(element){
             if(umodel[element.model] != true){
               $scope.models2.push(element.model);

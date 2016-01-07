@@ -40,7 +40,7 @@
           });
         }
       }
-      function getCar(s, f){
+      function getCar(s, f, e){
         var url = "http://www.fueleconomy.gov/ws/rest/vehicle/";
         if(s <= f){
           $.get(url+s, function(data){
@@ -48,7 +48,12 @@
             console.log(s);
             res = data.documentElement;
             sendUp(res);
-            setTimeout(getCar(s+1, f), 5000);
+            setTimeout(getCar(s+1, f, 0), 5000);
+          })
+          .error(function(){
+            if(e < 5){
+              setTimeout(getCar(s+1, f, e+1), 5000);
+            }
           });
         }
 
